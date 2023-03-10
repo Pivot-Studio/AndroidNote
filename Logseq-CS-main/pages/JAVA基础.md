@@ -1,0 +1,95 @@
+- ## [[int数组]]
+- ## [[String]]
+	- ### 底层实现
+		- 依靠char数组实现的，并且有final修饰
+- ## 向上转型/向下转型
+	- 向上转型会导致子类特有的方法无法调用。
+	- 比如说父类 a=new 子类1();子类父类中都有方法C，如果不使用向上转型的话，想要在其他类创建方法调用不同子类的方法C，起传参就是各种子类类型，有多少子类就要写多少方法。
+	- 向下转型的作用就是将向上转型的还原，可以调用子类的特殊方法
+- ## super/this
+	- ### super
+		- 调用父类的变量，构造方法，方法
+	- ### this
+		- 调用本类中的同名变量或相同形参的构造方法
+- [:figure {:cid "n129", :mdtype "table"} [:table {} [:thead {} [:tr {:cid "n130", :mdtype "table_row"} [:th {} [:span {:cid "n131", :mdtype "table_cell"} [:span {:md-inline "plain"} "抽象类"]]] [:th {} [:span {:cid "n132", :mdtype "table_cell"} [:span {:md-inline "plain"} "接口"]]]]] [:tbody {} [:tr {:cid "n133", :mdtype "table_row"} [:td {} [:span {:cid "n134", :mdtype "table_cell"} [:span {:md-inline "plain"} "一个类只能继承一个抽象类"]]] [:td {} [:span {:cid "n135", :mdtype "table_cell"} [:span {:md-inline "plain"} "一个类可以实现多个接口"]]]] [:tr {:cid "n136", :mdtype "table_row"} [:td {} [:span {:cid "n137", :mdtype "table_cell"} [:span {:md-inline "plain"} "成员可以是public,也可以是private,protected"]]] [:td {} [:span {:cid "n138", :mdtype "table_cell"} [:span {:md-inline "plain"} "所有成员都是public"]]]] [:tr {:cid "n139", :mdtype "table_row"} [:td {} [:span {:cid "n140", :mdtype "table_cell"} [:span {:md-inline "plain"} "成员变量无限制"]]] [:td {} [:span {:cid "n141", :mdtype "table_cell"} [:span {:md-inline "plain"} "成员变量只能是常量，是public static final类型"]]]] [:tr {:cid "n142", :mdtype "table_row"} [:td {} [:span {:cid "n143", :mdtype "table_cell"} [:span {:md-inline "plain"} "有构造方法"]]] [:td {} [:span {:cid "n144", :mdtype "table_cell"} [:span {:md-inline "plain"} "无构造方法"]]]] [:tr {:cid "n145", :mdtype "table_row"} [:td {} [:span {:cid "n146", :mdtype "table_cell"} [:span {:md-inline "plain"} "可以有静态方法"]]] [:td {} [:span {:cid "n147", :mdtype "table_cell"} [:span {:md-inline "plain"} "不能有静态方法"]]]]]]]
+- ## 抽象类/接口
+	- ### 抽象类
+		- 抽象类适用于表述本身是什么，主要是给具体实现类提供重用的代码
+	- ### 接口
+		- 接口适用于描述特征，共性
+-
+- ## 静态
+	- ### 特点
+		- 1.只加载一次，加载时优先于非静态
+		- 2.使用方式上不依赖于实例对象。
+		- 3.生命周期属于类级别，从JVM 加载开始到JVM卸载结束
+	- ### 静态类
+		- #### 特点
+			- 静态类只能位于其他类的内部
+			- 非静态内部类能够访问外部类的静态和非静态成员。
+			- 静态内部类不能访问外部类的非静态成员。他只能访问外部类的静态成员。
+	-
+- ## 面试
+	- ### 什么是面向过程编程？什么是面向对象编程？
+		- 面向过程：分析解决问题所需要的步骤，然后调用函数一步一步执行每一步步骤，从而解决问题
+		- 面向对象：将一个问题的解决方式分解成不同对象，然后描述每个对象的功能行为对这个问题作出解决
+		- C语言中也有面向对象的思想，它也有封装，继承，多态
+	- ### 编译性语言和解释性语言
+		- 编译性语言：通过编译期将源代码一次性翻译成机器码，然后执行，执行速率块
+		- 解释性语言：通过解释器一句一句的将源代码解释成机器码并执行，开发效率高
+	- ### Java和C++的区别
+		- #### 变量
+			- Java不提供指针来直接访问内存，程序内存更加安全
+		- #### 类
+			- Java的类是单继承的，C++支持多重继承
+		- #### 内存管理
+			- Java有自动内存管理机制，不需要程序员手动释放无用内存
+	- ### Java和kotlin区别
+		- #### 变量
+			- 变量通过var关键字定义,常量通过val关键字定义，编译期可以根据取值自动推导出他的引用
+		- #### 调用方法参数
+			- 在调用类的方法时可以显式其形参，比如说形参名为a, java传递的实参是b，那在kotlin中传递的可以是a=b;直接明了的反应出形参对应着什么
+		- #### 类
+			- 在类名右边的括号内类的定义成员变量，并且编译器会自动生产getter，setter,hashcode()等方法
+		- #### 数据类
+			- class有data修饰的话，他的变量就只负责保存数据，当用==进行比较时，如果储存数据相同，那返回值为true。
+		- #### 空指针
+			- 各种变量在kotlin中都不为null，这意味着我们不能为任何类型的变量定义null值。 如果有人试图给Kotlin中的变量赋值或返回空值，则代码将在编译时失败。
+		- #### 优点
+			- 1.节省代码量
+			- 2.减少很多空指针的问题
+			- 3.无缝调用java
+		- #### 缺点
+		  1.编译比较慢，自动为属性生成很多的get/set方法
+	- ### java面向对象有哪些特征？
+		- 封装
+			- 封装就是把对象的属性和操作（或服务）结合为一个独立的整体，并尽可能隐藏对象的内部实现细节。
+		- 继承
+		- 多态
+			- 同一个行为具有多个不同表现形式，多态具体体现:继承,向上转型,重写
+	- ### java是值传递还是引用传递
+		- 是值传递
+	- ### object有哪些方法可以重写？
+		- hashcode,equals,tostring,clone
+	- ### ==和equals()区别？
+		- ==是比较对象
+		- equals()的作用也是判断两个对象是否相等。但它一般有两种使用情况：
+			- 1.类没有覆盖写 equals() 方法。则通过 equals() 比较该类的两个对象时，等价于通过“==”比较这两个对象。
+			- 2.类override了 equals() 方法。一般，我们都覆盖 equals() 方法来比较两个对象的内容是否相等；若它们的内容相等，则返回 true (即，认为这两个对象相等)。
+	- ### hashcode()和equals()
+		- 不考虑自定义hashcode()和equals()的情况下，equals()相同hashcode()一定相同，hashcode()相同，由于hash冲突，equals()不一定相同
+	- ### 自定义equals()
+		- 先判断是否==，地址都相等，则内容也相等，return true
+		- 再通过instanceOf()方法,判断传入的object类类型是否是我们想要的，不是就直接return false
+		- 之后将内部变量挨个进行equals()
+	- ### final在并发环境下
+		- final 可以保证正在创建中的对象不能被其他线程访问到
+	- ### 能否重写父类静态方法？
+		- 不行
+	- ### 非静态内部类和静态内部类脱离外类后如何进行创建？
+		- A a=new A();/非静态内部类需要先获取外部类的实例
+		- A.B ab = a.new B();
+		- A.B ab=new A.B();
+	- ### 非静态内部类为什么会持有外部类的引用？
+		- 构造方法在编译的时候添加了一个参数，这个参数就是外部类的实例
+		- 所以“非静态内部类为什么会持有外部类的引用”是发生在编译阶段

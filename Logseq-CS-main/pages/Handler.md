@@ -1,0 +1,30 @@
+- ## Handler
+	- ### 作用
+		- 能够发送消息和处理Looper分发给他的消息，handler是消息发送到指定MessageQueue，然后通过Looper将消息分发给Handler处理
+- ## Looper
+	- ### 作用
+		- 安卓是事件驱动的，所有事件都是loop启动的，每一个点击触摸或者说Activity都是运行在Looper的控制之下。 looper在C层与Java层都有实现，Looper是循环的意思,它负责从消息队列中循环的取出消息然后把消息交给Handler处理
+	- ### 使用
+		- ### 主线程
+			- App 启动时,会调用到 ActivityThread 中,Looper 就在其 main() 方法中被启动,main() 中会主动调用 Looper.prepareMainLooper() 和 Looper.loop()
+		- ### 子线程
+			- 子线程中Looper.prepare()创建Looper对象并且关联到线程，创建Handler对象,Looper.loop()开启循环
+- ## Message
+	- ### 作用
+		- 代表一个行为what或者一串动作Runnable, 每一个消息在加入消息队列时,都有明确的目标Handler
+	- ### 使用
+		- #### 创建
+			- obtains(这样会复用之前的Message的内存，不会频繁的创建对象),直接new
+		- #### 发送
+			- ##### post方法
+				- 创建内部Handler类，在执行new Handler时，Handler默认情况下会绑定当前代码执行的主线程，当我们在自创子线程完成操作后，将需要发送的消息内容包裹在runnable中通过Handler的post方法发送Messagequeue(最后runnable仍然会被封装为message), 然后经过Looper的循环将其交给Handler进行处理
+			- ##### sendMessage方法
+				- handler创建内部类，重写handleMessage进行消息处理，同样的在子线程进行相应处理，用sendMessage将消息传入MessageQueue队列，传递的是Message类，Message 中的int类型what，用当做Message的标识符。中的其他两个int类型arg1，arg2,还有一个object类型的obj,以及setData，getData方法用处理Bundle(键值对类型)对象
+- ## MessageQueue
+	- ### 作用
+		- C层与Java层都有实现，以队列的形式对外提供插入和删除的工作, 其内部结构是以双向链表的形式存储消息的,当没有消息时，此时主线程会释放CPU资源进入休眠状态，直到下个消息到达或者有事务发生
+- ## 面试
+	- ### 一个线程可以有几个Handler几个Looper?
+		- 多个handler一个Looper
+	- ### Handler使用的什么什么设计模式？
+		- 生产者消费者模式：Handler.sendMessage相当于一个生产者,MessageQueue相当于容器，Looper相当于消费者。

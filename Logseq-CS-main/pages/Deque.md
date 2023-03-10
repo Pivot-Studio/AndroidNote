@@ -1,0 +1,6 @@
+- offerFirst()
+- peekFirst()
+- pollFirst()
+- offerLast()
+- peekLast()
+- pollLast()

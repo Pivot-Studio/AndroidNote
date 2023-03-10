@@ -1,0 +1,5 @@
+- i.length长度
+- Arrays.toString(i)转换成字符串
+- Arrays.sort(i)排序数组
+- Arrays.asList(i)转换成List类型
+- Arrays.fill(i,value)填充

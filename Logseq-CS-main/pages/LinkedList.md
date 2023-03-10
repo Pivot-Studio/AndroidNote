@@ -1,0 +1,13 @@
+- i.size() 长度
+- i.isEmpty()是否为空
+- toArray(int[] a)转换成数组
+- add()
+- addFirst()
+- addLast()
+- get(int)获取索引位置
+- contains()
+- getFirst()
+- getLast()
+- remove()
+- removeFirst()
+- removeLast()

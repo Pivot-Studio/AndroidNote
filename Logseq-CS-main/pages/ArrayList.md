@@ -1,0 +1,8 @@
+- i.size() 长度
+- i.isEmpty()是否为空
+- toArray(int[] a)转换成数组
+- add()添加元素
+- add(int,object)添加元素到指定位置同时扩容
+- get()获取指定索引元素
+- remove()删除指定索引元素
+- set()替换指定元素

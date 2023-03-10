@@ -1,0 +1,95 @@
+- 是由多个库组成的套件，是谷歌给安卓开发者提供的写业务代码的最佳做法。
+- Google 推出了 Jetpack，让开发者能够使用标准的架构组件，而不用去纠结架构的方案设计，可以将更多的精力放在自己的业务代码上
+- ## MVVM和MVC各自特点以及应用场景？
+	- ### MVC
+		- #### 组成
+			- MVC分别是model,view,controller,res文件下的布局就是view层，而activity则充当controller层。
+		- #### 使用
+			- 但是基本MVC模式里面xml文件实际做的事情很少，很容导致大部分东西都写在acitivity上动不动activity就有几百行，程序臃肿。
+			- mvc适合小项目的快速开发。
+	- ### MVVM
+		- #### 组成
+			- MVVM分别为model,view,viewmodel,严格的mvvm开发model和view之间不能直接进行数据交流而是依靠viewmodel
+		- #### 使用
+			- viewmodel中的数据独立于生命周期之外，从而解决了数据的瞬态丢失等情况，
+			  并且viewmodel可以设置观察者轻松实现双向绑定，视图上的变化也可以很快的和model交流。
+			  耦合度低，可以让开发人员专注于业务逻辑，设计同学专注于页面设计
+			  并且常规MVVM模式中用到了较多jetpack组件库中的组件，也是未来这个安卓开发的趋势，我觉得啥都可以尝试用MVVM模式。
+- ## Lifecycle
+	- ### 原理
+		- 一个info方法存放所有@OnLifecycleEvent()注解修饰的方法，最后通过反射的方式，方法名.invoke依据生命周期进行回调
+	- ### 作用
+		- #### 生命周期监听
+			- 安卓sdk29之后新增的registerActivityLifecycleCallbacks可以直接监听生命周期事件回调，sdk29之前会通过向 Activity 添加一个无 UI 界面的 Fragment(即 ReportFragment),间接获得 Activity 的各个生命周期事件的回调。
+	- ### 使用
+		- lifeCycle解耦界面与组件，可以对单个活动的生命周期进行监听，不使用lifeCycle的情况下需要去活动下重写onstart,onpause等再在其方法内进行响应操作，使用lifecycle则需要自定义一个观察者以lifecycleobserver作为接口，并且在其内部自定义方法用注解@OnLifecycleEvent()类型进行各个生命周期的绑定。
+- ## ViewModel
+	- ### 原理
+		- 为什么能够独立于活动或者碎片的生命周期之外？
+			- 找到viewmodelstore,andoridx的activity父类ComponentActivity实现的有ViewModelStoreOwner接口
+		- onCeate创建的时候如何保证拿到的是从前存有数据的viewmodelstore?
+			- get方法通过反射获取到这个viewmodel.class的标识，作为hashmap的key,之后如果之前存在就直接使用，没有的话则通过创建工厂里的create方法利用反射的方式创建对象
+	- ### 作用
+		- 是介于view和model之间的桥梁，用来将试图和数据分离，来把model中的数据提供给view
+		- 解决瞬态数据丢失，比如正常情况下在输入框内输入内容将屏幕旋转由于活动销毁并重建会导致数据丢失，但是viewodel由于他生命周期的特性，他的数据储存是独立与活动的生命周期之外的，其实活动被销毁他也仍然存在
+		- 数据统一进行管理可以减小代码维护难度
+	- ### 使用
+		- 自定义类继承自ViewModel类
+- ## LiveData
+	- ### 原理
+		- setValue()和postValue()的区别？
+			- setValue只能在主线程，postValue可以在所有线程，但是postValue是对setValue的一层封装，最后任然会调用setValue，
+		- setValue()方法原理
+			- 通过lastVersion和Version两个int类型实现了版本号机制，用来保证收到的是最新的消息，当切换成onstate状态后只会收到最近的一次更新
+		- observe原理
+			- observe中的onchanged方法默认在主线程中执行，在observe方法注册观察者时，会判断当前组件（即oberve(this.....  中的this对应的组件）的生命周期是否终止，如果终止就注册失败.
+			- 同时在监听器创建成功后，每当this组件的生命周期发生变化，如果达到Destroy状态就会将监听器从liveData的相应map中移出，从而保证了内存不泄漏
+			- 其内部onchanged方法不一定是由引用改变触发的，而是由生命周期改变触发的
+			- 当创建监听器的时候也利用lifecycle对设置的activity,fragment的生命周期进行监听者，每当达到onstart之后就会触发一次更新数据，将livedata的最新数据反馈到onchanged中去
+			- 因此能够接受到注册前的消息，算是粘性事件
+	- ### 作用
+		- 生命周期发生变化时会通知
+		- 就是在viewmodel中的数据发生变化时通知试图页面的方式
+	- ### 使用
+		- 在自定义ViewModel类中创建MutableLiveData<?>变量进行活动中的数据储存，
+		- 在ViewModel中创建get方法获取其实例，需要考虑为空时，为空时设置初始值，否则为null
+		- 为其设置变量名.postValue,getValue,observe分别进行数据传入传出以及内部匿名类实现监听,
+		- 最主要的优势还是能够使用observe进行监听，例如可以让两个fragment公用一个viewmodel中的livedata达到控件同步，同时在
+- ## DataBinding
+	- ### 作用
+		- 实现动态的数据绑定和事件绑定
+	- ### 使用
+		- 首先添加依赖
+		- 在布局文件中以layout为根目录添加数据类的数据对象尖括号data,同时在具体View的中用@{}实现绑定
+		- 在正常活动里面是设置setContentView来设置视图，这里调用 DataBindingUtil的setContentView方法获取ActivityMainBinding对象，调用其数据类的set方法就可以实现View中的数据设定
+		- 让布局文件承担部分原本属于页面的工作，可以进行数据绑定以及事件绑定。不用在活动里面创建各种view变量然后挨个进行操作，而是基本可以靠ActivityMainBinding进行所有数据的绑定。
+		- 二级界面中进行数据绑定
+			- app:自定义供二级页面使用的变量名=@{data的name名}
+		- recyclerview中进行数据绑定
+			- activity中需要首先对setContentView进行基本的绑定操作，以及在recyclerview设置adapter时前面加上actvityMainBinding.,之后在adpter中的viewholder以及onbindview对单个item进行基本绑定操作
+		-
+- ## bindadpter
+	- ### 作用
+		- 可以在布局文件中实现实现静态的数据绑定
+	- ### 使用
+		- 不需要获取对应View实例，直接通过注释@BindAdpter
+		  可在布局里面设置加载网址的url字符串（用@{单引号}）和drawable文件地址（用@{@drawable/drawable文件名称}），然后不获取对应view实例，通过创建对应名称的方法和@Bindadpter实现数据绑定
+-
+- ## Room
+	- ### 作用
+		- 数据库，支持与LiveData、RxJava
+	- ### 使用
+		- 三个主要部分：
+			- @Entity：对应数据库中的表
+			- @DAO：包含访问数据库的方法，增删改查等
+			- @Database继承自RoomDatabase的抽象类，在注释标注表和版本
+	- ## WorkManager
+	- ### 作用
+		- Android8.0以后，Android对于后台service管理的更加严格，应用在后台启动的服务必须是前台服务，还要求前台服务启动以后5秒内必须创建好一个前台通知navigation，否则会导致应用闪退。谷歌推荐使用WorkManager架构组件来管理后台工作任务。
+- ## compose
+	- ### 作用
+		- 减少xml文件，降低包体积
+		- java代码直接设置UI布局，效率高于读取xml，在右方的预览模式可以看到自己写入的Ui，但是无法读取到网络，文件内容
+- ## Navigation
+	- ### 作用
+		- 在没有出现navigation之前在activity中嵌套多个fragment需要需要用fragmentmanager和fragmentTransaction来管理fragment之间的切换，但是过程繁琐

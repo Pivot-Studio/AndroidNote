@@ -1,0 +1,22 @@
+- ## 生命周期
+- ## 启动方式
+	- singleTop():容易出现在栈顶的活动
+	- singleTask():适合总前台类型的活动使用
+	- singleInstance():开启一个单独的活动栈供其使用，一般是希望不同应用程序公用这个活动
+- ## StartActivity()方法
+	- 传递intent(当前活动或碎片的context,目标活动的class文件)
+- ## onActivityResult()方法
+	- ### 作用
+		- 比方说A创建了两个B，requestcode可以告诉他们两都是B，但是没法区分，resultcode就可以用来区分B，日常开发中一般只用requestcode
+	- ### 使用
+		- onActivityResult 位于restart()之前
+		- requestcode需要大于等于0,在startActivityForResult中传入
+		- resultcode默认是0，在子活动setresult中传入,
+- ## onSaveInstanceState()方法
+	- ### 作用
+		- 用来短暂保存数据，在onsaveInastanceState方法传递的形参是bundle类型
+		- 在可以从oncreate方法用传递来的bundle进行恢复，每次读取前先进行判空
+	- ### 使用
+		- onSaveInstanceState的调用是处于onPause和onStop之间
+- ## onNewIntant()方法
+	- singleTask会调用，位于onRestart()之前，传递过来intent

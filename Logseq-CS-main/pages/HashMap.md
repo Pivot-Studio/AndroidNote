@@ -1,0 +1,13 @@
+- i.size() 长度
+- i.isEmpty()是否为空
+- put()：添加
+- get()
+- containsKey()是否包含某个Key
+- getOrDefault() 方法获取指定 key 对应对 value，如果找不到 key ，则返回设置的默认值。
+- remove()：删除
+- replace()：替换
+- clear()清空
+- for(Map.Entry<Integer, Integer> entry: map.entrySet()){
+- entry.getValue()
+- entry.getKey()
+- }

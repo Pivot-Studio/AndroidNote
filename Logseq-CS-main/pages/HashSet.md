@@ -1,0 +1,5 @@
+- i.size() 长度
+- i.isEmpty()是否为空
+- add()添加元素
+- contains()
+- remove()删除指定元素

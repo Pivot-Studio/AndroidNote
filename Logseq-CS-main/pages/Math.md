@@ -1,0 +1,5 @@
+- Math.abs()绝对值
+- Math.max()最大值
+- Math.pow()幂次方（计算的为double类型需要转换成int类型）
+- Math.random()0-1的随机double数
+- Math.sqrt() 平方根

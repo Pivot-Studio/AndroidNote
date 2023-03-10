@@ -1,0 +1,29 @@
+- ## onCreateViewHolder
+	- 实现ViewHolder初始化
+- ## ViewHolder
+	- 可以步重复进行findViewById，findViewById是非常消耗性能的。
+	- 一个ViewHolder对应一个itemView,拿到了viewHolder的引用就相当于拿到了itemView的所有信息。
+- ## onBindViewHolder
+	- 在onbindViewHolder会传过来向上转型的ViewHolder，根据instanceof判断属于哪种ViewHolder, 然后再根据position判断在ViewHolder中需要加载哪种数据。
+- ## 缓存
+	- ### ListView
+		- ListView只有两级缓存第一级缓存是当前页面显示的部分，当itemView数据发生变化时，直接对当前的
+		- viewHolder进行复用，第二集缓存时屏幕之外的itemView，在加载进来后需要重新进行一边getView()相当于recyclerview的onbindview()
+	- ### recyclerView
+		- 一级缓存scrap和listview相同，
+		- 二级缓存cache缓存的是刚刚移出的屏幕的ViewHolder,默认大小是两个，当其被填满后会依据FIFO原则，把先进入的缓存移入下一级缓存中，然后将新缓存放入。在其中查找数据是根据的position
+		- 第三集缓存ViewCacheExtension需要自己定义，不自定义ViewCacheExtension就不会进入判断,慎用，
+		- 第四级缓存recycledViewPool，刚刚说到的第二级缓存填满后移出的缓存就是放入这里。默认大小是5个。放入之前会将ViewHolder进行重置，再加载时需要重新进行一遍onBindViewHolder并且依据的itemtype
+- ## 刷新数据
+	- 全局更新：notifyDataSetChanged()
+	- 指定更新：notifyItemChanged(int)
+	- 局部更新：notifyItemChanged(int, Object)
+- ## 面试
+	- ### 如何实现瀑布流？
+		- recyclerView.setLayoutManager
+	- ### 如何在RecyclerView中加载不同类型的itemView?
+		- 重写getItemViewType()，根据不同position返回不同ViewType给onCreateViewHolder,onCreateViewHolder好知道当前改给哪种ViewHolder进行初始化
+	- ### RecyclerView优化
+		- 删除，添加指定位置item时，不使用全局刷新而是用recyclerviewadpter的指定方法进行单个处理
+		- 减少item的嵌套
+		- 根据需求适当改变recyclerview的各级缓存大小
