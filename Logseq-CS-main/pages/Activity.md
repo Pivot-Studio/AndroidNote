@@ -1,4 +1,5 @@
 - ## 生命周期
+	- https://blog.csdn.net/AndroidOliver/article/details/59105799
 - ## 启动方式
 	- singleTop():容易出现在栈顶的活动
 	- singleTask():适合总前台类型的活动使用
