@@ -28,3 +28,5 @@
 		- 多个handler一个Looper
 	- ### Handler使用的什么什么设计模式？
 		- 生产者消费者模式：Handler.sendMessage相当于一个生产者,MessageQueue相当于容器，Looper相当于消费者。
+	- ### Looper如何中断
+		- 当子线程开启了loop()之后，就算子线程不做任何事情，子线程也不会执行结束，looper也不会退出。只有调用quit方法才会提出。因为looper调用了loop()之后，会在MessageQueue的next()方法阻塞，这个next方法要么返回Message，要么就阻塞，要么就返回null导致loop()方法结束，只有调用了quit()方法后，这个方法才会返回null， ps: return  可以跳出死循环
