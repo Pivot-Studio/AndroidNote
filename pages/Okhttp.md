@@ -27,7 +27,7 @@
 		- 引用计数器`List<Reference<StreamAllocation>>`会记录所有连接的活跃程度。`StreamAllocation`被高层反复执行`aquire`与`release`。这两个函数在执行过程中其实是在一直在改变`Connection`的的 `List<WeakReference<StreamAllocation>>`大小。
 		- 当活跃度被识别为0,并且需要进行清理的时候，就会被清除掉。
 - ## 设计模式
-	- 构造者模式（OkhttpClient,Request 等各种对象的创建）
+	- [[构造者模式]]（OkhttpClient,Request 等各种对象的创建）
 		- 优点：我们不再关注OkHttpClient/Request的构建细节，不用每次构建时都传入大量参数，只需要传递我们关心的参数，非常易用；
 	- 工厂模式  Call接口中用到了内部工厂接口
 	- 线程池（单例模式）
