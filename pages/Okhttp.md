@@ -1,3 +1,17 @@
+- ## 结构
+	- okhttp是一个优秀的网络请求框架，OkHttp 主要是通过 5 个拦截器和 3 个双端队列（2 个异步队列，1 个同步队列）执行工作，OkHttp 的底层发送 HTTP 请求与接受响应是通过 Socket ，同时实现了连接池。
+- ## 过程
+- ![](https://img-blog.csdn.net/20180228221939390?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGdnX2NvbGQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+-
+- ## 请求
+	- ### 异步
+		- 两个队列和一个线程池负责异步操作，执行5个并发请求，同时允许持有的最大并发异步请求数量是64.
+		- 两个队列分别为
+			- 待访问请求队列，里面存储准备执行的异步请求。
+			- 异步请求队列，存储正在执行的异步请求，会被给线程池，提交通过call.enqueue实现异步操作。
+	- ### 同步
+		- 同步请求队列，通过call.excute实现同步操作。没有线程池。它会阻塞线程去获取数据。
+- ## 拦截器
 - ## 连接池复用
 	- 优点：在高并发的请求连接情况下或者同个客户端多次频繁的请求操作，无限制的创建会导致性能低下。在`timeout`空闲时间内，连接不会关闭，相同重复的request将复用原先的`connection`，减少握手的次数，大幅提高效率。
 	-
@@ -8,3 +22,8 @@
 		- 会有专门的线程中不停调用`Cleanup` 清理的动作并立即返回下次清理的间隔时间。
 		- 引用计数器`List<Reference<StreamAllocation>>`会记录所有连接的活跃程度。`StreamAllocation`被高层反复执行`aquire`与`release`。这两个函数在执行过程中其实是在一直在改变`Connection`的的 `List<WeakReference<StreamAllocation>>`大小。
 		- 当活跃度被识别为0,并且需要进行清理的时候，就会被清除掉。
+- ## 设计模式
+	- 构造者模式（OkhttpClient,Request 等各种对象的创建）
+	- 线程池（单例模式）
+	- 责任链模式（拦截器的链式调用）
+	- 策略模式（在 CacheInterceptor 中，在响应数据的选择中使用了策略模式，选择缓存数据还是选择网络访问。）
