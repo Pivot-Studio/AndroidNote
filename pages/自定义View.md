@@ -12,6 +12,17 @@
 		  c.绘制children（dispatchDraw）
 		  d.绘制装饰（onDrawScrollBars）
 - ## View动画
+	- 动画分为帧动画，view动画，属性动画
+	- ### 帧动画
+		- 就和电视一样通过加载Drawable资源将逐个逐个图片进行拼接
+		- 可以设置动画是否重复播放以及每个图片的持续时间
+	- ### view动画（补间动画）
+		- 由移动，缩放，透明度，旋转组成四种类型的补间动画；并且View动画还提供了动画集合类（AnimationSet），通过动画集合类（AnimationSet）可以将多个补间动画以组合的形式显示出来。
+		- animationSet还可以实现监听，监听动画开始，动画取消，动画结束，动画重复执行
+		- 但是补间动画只是实现了视觉效果上做了移动、缩放、旋转和淡入淡出的效果，其实并没有真正改变 View 的属性。
+	- ### 属性动画
+		- 相当于是view动画的增强版，除了view动画的四种基本方式，还有有其他复杂的动画可以供直接调用
+		- 属性动画不光实现了视觉上的移动，其点击事件位置也跟随发生变化。
 - ## 面试
 	- ### 子view宽高可以超过父view？
 		- 能，android:clipChildren = "false" 这个属性要设置在父 view 上。代表其中的子View 可以超出屏幕。
@@ -19,4 +30,4 @@
 		- 1.让view支持wrap_content属性，在onMeasure方法中针对AT_MOST模式做专门处理，否则wrap_content会和match_parent效果一样（继承ViewGroup也同样要在onMeasure中做这个判断处理）
 		- if(widthMeasureSpec == MeasureSpec.AT_MOST && heightMeasureSpec == MeasureSpec.AT_MOST){
 		- setMeasuredDimension(200,200);
-		- 2.view中有线程或者动画 要及时停止，
+		- 2.view中有线程或者动画 要及时停止，避免内存泄漏

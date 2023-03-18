@@ -95,4 +95,7 @@
 		- 所以“非静态内部类为什么会持有外部类的引用”是发生在编译阶段
 	- ### int,Integer互相转换原理
 		- Java中int和Integer互转，原理是Java编译器帮你调用了包装类的valueOf() 和 intValue() 两个方法。
+	- **String,StringBuffer,StringBuilder区别**
+		- 1、三者在执行速度上：StringBuilder > StringBuffer > String (由于String是常量，不可改变，拼接时会重新创建新的对象)。
+		- 2、StringBuffer是线程安全的，StringBuilder是线程不安全的。（由于StringBuffer有缓冲区）
 -
