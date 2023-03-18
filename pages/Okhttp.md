@@ -1,0 +1,10 @@
+- ## 连接池复用
+	- 优点：在高并发的请求连接情况下或者同个客户端多次频繁的请求操作，无限制的创建会导致性能低下。在`timeout`空闲时间内，连接不会关闭，相同重复的request将复用原先的`connection`，减少握手的次数，大幅提高效率。
+	-
+	- 缺点：并非`keep-alive`的timeout设置时间越长，就越能提升性能。长久不关闭会造成过多的僵尸连接和泄露连接出现。
+	- ### 复用：
+		- 遍历connections缓存列表，当某个连接计数的次数小于限制的大小以及request的地址和缓存列表中此连接的地址完全匹配。则直接复用缓存列表中的connection作为request的连接。
+	- ### 清理回收：
+		- 会有专门的线程中不停调用`Cleanup` 清理的动作并立即返回下次清理的间隔时间。
+		- 引用计数器`List<Reference<StreamAllocation>>`会记录所有连接的活跃程度。`StreamAllocation`被高层反复执行`aquire`与`release`。这两个函数在执行过程中其实是在一直在改变`Connection`的的 `List<WeakReference<StreamAllocation>>`大小。
+		- 当活跃度被识别为0,并且需要进行清理的时候，就会被清除掉。
