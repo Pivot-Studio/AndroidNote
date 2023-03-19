@@ -1,2 +1,9 @@
 - ## 图片加载过程
-	- Glide的加载过程大致如下，Glide#with获取与生命周期绑定的RequestManager，RequestManager通过load获取对应的RequestBuilder。根据RequestBuilder构建对应的Request,Target 将Request,Target 交给RequestManager进行统一管理。调用RequestManager#track开始进行图片请求。request通过Engine分别尝试从活动缓存、Lru缓存、文件缓存中加载图片，当以上的缓存中都不存在对应的图片后，会从网络中获取。而网络获取大致可以分成，ModelLoader模型匹配，DataFetcher数据获取，然后经历解码、图片变换、转换。如果能够进行缓存原始数据，还会将解码的数据进行编码缓存到文件。
+	- with获取与生命周期绑定的RequestManager，
+	- RequestManager通过load获取对应的RequestBuilder。
+	- 根据RequestBuilder构建对应的Request,
+	- 调用RequestManager开始进行图片请求。
+	- request通过Engine分别尝试从活动缓存、Lru缓存、文件缓存中加载图片，当以上的缓存中都不存在对应的图片后，会从网络中获取。
+	- 而网络获取大致可以分成，ModelLoader模型匹配，DataFetcher数据获取，
+	- 然后经历解码、图片变换、转换。
+	- 如果能够进行缓存原始数据，还会将解码的数据进行编码缓存到文件。
