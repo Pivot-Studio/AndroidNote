@@ -4,3 +4,10 @@
   threadLocal.set();
   threadLocal.get();
   ```
+- ## 原理
+	- 内部维护一个哈希表，
+	- key是弱引用，
+	- 因为由于ThreadLocalMap的生命周期跟Thread一样长，如果都没有手动删除对应key，都会导致内存泄漏
+	- value是强引用
+	- 因为如果key不为空，但是value提前为空了回导致空指针异常
+	- 必须要及时进行threadLocal.remove()来解决内存泄漏的问题
