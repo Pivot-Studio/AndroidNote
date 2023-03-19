@@ -6,7 +6,7 @@
 	- MVC
 		- View层可以访问Model层和Controller层
 		- controller层可以访问Model层
-		- 优点：部署快，适合开发小型项目，耦合度高，View层和Model连接过于紧密导致效率低
+		- 优点：部署快，适合开发小型项目，耦合度高，View层和Model连接过于紧密导致效率低，难以可持续性维护
 	- MVP
 		- 相比于MVC将View层和Model完全隔开
 		- Presenter层负责View层和Model层的交互
