@@ -100,4 +100,6 @@
 		- 2、StringBuffer是线程安全的，StringBuilder是线程不安全的。（由于StringBuffer有缓冲区）
 	- ### 为什么String要设计成不可变的？
 		- 保证安全性，String被许多的Java类(库)用来当做参数,例如 网络连接地址URL,文件路径path,
+	- #### String类可以被继承么？
+		- 不能，因为它是一个final类，同样的还有Integer，Float，Boolean，Byte，Character，Long，Short等等，也就是说，所有基本类型的包装类都是final类，无法被继承或修改
 -

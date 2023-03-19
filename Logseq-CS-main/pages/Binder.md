@@ -1,3 +1,4 @@
+- Binder使用Clinet->Server通讯方式，Binder框架定义的四个角色，Server,Client,ServiceManager,以及Binder驱动，其中Server,Client,ServiceManager运行于用户空间，驱动运行于内核空间，Binder驱动程序提供Dev/binder与用户空间交互
 - ## 跨进程通信
 	- 在内核空间创建一块接收缓存区，
 	- 将内核缓存区、接收进程的用户空间映射到接收缓存区

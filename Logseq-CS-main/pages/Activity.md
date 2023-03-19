@@ -21,3 +21,6 @@
 		- onSaveInstanceState的调用是处于onPause和onStop之间
 - ## onNewIntant()方法
 	- singleTask会调用，位于onRestart()之前，传递过来intent
+- ## 面试
+	- ### activity关闭后尚未运行完毕的thread会怎么样 ？
+		- 会变成空进程线程,优先级最低 很容易被终止回收
