@@ -30,7 +30,18 @@
 		- 但是补间动画只是实现了视觉效果上做了移动、缩放、旋转和淡入淡出的效果，其实并没有真正改变 View 的属性。
 	- ### 属性动画
 		- 相当于是view动画的增强版，除了view动画的四种基本方式，还有有其他复杂的动画可以供直接调用
-		- 属性动画不光实现了视觉上的移动，其点击事件位置也跟随发生变化。
+		- 属性动画不光实现了视觉上的移动，其点击事件位置也跟随发生变化。、
+- ## View更新
+	- View的更新方式主要有以下3种：
+	- 1.不使用多线程和双缓冲
+	- 这种情况最简单，在View发生改变时对UI进行重绘。你只需要Activity中显式调用View对象中的invalidate()方法即可，系统会自动调用View的onDraw()方法。
+	- 2.使用多线程和不使用双缓冲
+	- 通过Handler对象，在子线程发送消息，在主线程处理消息更新UI。
+	- 3.使用多线程和双缓冲
+	- Android的SurfaceView是View的子类，它同时也实现了双缓冲。你可以定义一个它的子类并实现Surfaceholder.Callback接口。由于SurfaceHolder.Callback接口，新线程就不要android.os.Handler帮忙了。SurfaceHolder中lockCanvas()方法可以锁定画布，绘制完新的图像后调用unlockCanvasand Post解锁。
+	  ————————————————
+	  版权声明：本文为CSDN博主「躺平君~从安卓到全栈」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+	  原文链接：https://blog.csdn.net/yinianzhijian99/article/details/122377517
 - ## 面试
 	- ### 子view宽高可以超过父view？
 		- 能，android:clipChildren = "false" 这个属性要设置在父 view 上。代表其中的子View 可以超出屏幕。
