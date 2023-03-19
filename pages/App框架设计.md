@@ -4,6 +4,7 @@
 	- 使 App 容易测试；
 - ## 架构选择
 	- MVC
+		- View层可以访问Model层和Controller层
 	- MVP
 	- MVVM
 	- MVI
