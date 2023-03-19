@@ -39,3 +39,9 @@
 		- if(widthMeasureSpec == MeasureSpec.AT_MOST && heightMeasureSpec == MeasureSpec.AT_MOST){
 		- setMeasuredDimension(200,200);
 		- 2.view中有线程或者动画 要及时停止，避免内存泄漏
+	- ### Activity,Windows,View之间的关系？
+		- Activity 主要管理生命周期 windows 首要负责窗口绘制 view主要是绘制内容
+	- ### PopupWindow和Dialog有什么区别？
+		- 两者最根本的区别在于有没有新建一个window，PopupWindow没有新建，而是将view加到DecorView；Dialog是新建了一个window，相当于走了一遍Activity中创建window的流程
+	- ### NestSrollView嵌套RecyclerView？
+		- 要注意RecyclerView需要是固定高度，如果是wrap_content，则默认RecyclerView所有item都显示了，没了复用效果也没了滑动，只有NestedScrollView的滑动。
