@@ -33,3 +33,4 @@
 	- ### 为什么looper不会导致ANR
 		- Looper在从MessageQueue获取不到信息时会进入阻塞，将CPU资源释放。
 		- 然后阻塞状态如果MessageQueue
+-
