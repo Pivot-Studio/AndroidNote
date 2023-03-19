@@ -5,8 +5,16 @@
 - ## 架构选择
 	- MVC
 		- View层可以访问Model层和Controller层
+		- controller层可以访问Model层
+		- 优点：部署快，适合开发小型项目，耦合度高，View层和Model连接过于紧密导致效率低
 	- MVP
+		- 相比于MVC将View层和Model完全隔开
+		- Presenter层负责View层和Model层的交互
+		- 优点：基于接口设计，更有利于进行单元测试，但也会产生很多类，虽然胡搜逻辑清晰但代码量庞大
 	- MVVM
+		- 搭配JetPack提供的ViewModel,dataBing这些模块能够更充分的解耦，
+		- 数据层发生变化导致View 层的 UI变化时，也不需要像 MVP 模式那样修改对应接口和方法实现
+		- 同样也易于单元测试
 	- MVI
 - # 分层化/模块化
 	- SDK层-->基础架构（网络框架，Util工具，数据库）-->业务逻辑
