@@ -1,0 +1,4 @@
+- ## 使用
+	- 导入依赖后使用LeakCanary.install(this)初始化即可
+- ### LeakCanary是如何使用ObjectWatcher 监控生命周期的？
+  LeakCanary使用了Application的ActivityLifecycleCallbacks和FragmentManager的FragmentLifecycleCallbacks方法进行Activity和Fragment的生命周期检测，当Activity和Fragment被回调onDestroy以后就会被ObjectWatcher生成KeyedReference来检测，然后借助HeapDumpTrigger的轮询和触发gc的操作找到弹出提醒的时机
