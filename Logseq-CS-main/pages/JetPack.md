@@ -43,7 +43,7 @@
 			- 通过lastVersion和Version两个int类型实现了版本号机制，用来保证收到的是最新的消息，当切换成onstate状态后只会收到最近的一次更新
 		- observe原理
 			- observe中的onchanged方法默认在主线程中执行，在observe方法注册观察者时，会判断当前组件（即oberve(this.....  中的this对应的组件）的生命周期是否终止，如果终止就注册失败.
-			- 同时在监听器创建成功后，每当this组件的生命周期发生变化，如果达到Destroy状态就会将监听器从liveData的相应map中移出，从而保证了内存不泄漏
+			- 同时在监听器创建成功后，每当this组件的生命周期发生变化，就会通知，如果达到Destroy状态就会将监听器从liveData的相应map中移出，从而保证了内存不泄漏
 			- 其内部onchanged方法不一定是由引用改变触发的，而是由生命周期改变触发的
 			- 当创建监听器的时候也利用lifecycle对设置的activity,fragment的生命周期进行监听者，每当达到onstart之后就会触发一次更新数据，将livedata的最新数据反馈到onchanged中去
 			- 因此能够接受到注册前的消息，算是粘性事件
