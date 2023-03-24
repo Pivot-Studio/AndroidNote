@@ -5,6 +5,7 @@
 - ## [[BroadCast]]
 - ## [[ContentProvider]]
 - ## [[Handler]]
+- ## [[Window]]
 - ## [[Jetpack]]
 - ## [[布局]]
 - ## [[自定义View]]
