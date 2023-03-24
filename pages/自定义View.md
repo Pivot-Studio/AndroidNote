@@ -53,3 +53,6 @@
 		- 两者最根本的区别在于有没有新建一个window，PopupWindow没有新建，而是将view加到DecorView；Dialog是新建了一个window，相当于走了一遍Activity中创建window的流程
 	- ### NestSrollView嵌套RecyclerView？
 		- 要注意RecyclerView需要是固定高度，如果是wrap_content，则默认RecyclerView所有item都显示了，没了复用效果也没了滑动，只有NestedScrollView的滑动。
+	- ### View和ViewGroup的区别？
+		- 他俩的区别就在于重写其中的onMeasure、onlayout、ondraw三个方法。
+		  viewgroup大部分情况不需要绘制，而view不需要layout。
