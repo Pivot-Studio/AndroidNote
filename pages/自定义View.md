@@ -49,6 +49,7 @@
 		- 2.view中有线程或者动画 要及时停止，避免内存泄漏
 	- ### Activity,Windows,View之间的关系？
 		- Activity 主要管理生命周期 windows 首要负责窗口绘制 view主要是绘制内容
+		- setContentView()实际上调用的是getWindow().setContentView()
 	- ### PopupWindow和Dialog有什么区别？
 		- 两者最根本的区别在于有没有新建一个window，PopupWindow没有新建，而是将view加到DecorView；Dialog是新建了一个window，相当于走了一遍Activity中创建window的流程
 	- ### NestSrollView嵌套RecyclerView？
