@@ -96,8 +96,8 @@
 	- ### int,Integer互相转换原理
 		- Java中int和Integer互转，原理是Java编译器帮你调用了包装类的valueOf() 和 intValue() 两个方法。
 	- **String,StringBuffer,StringBuilder区别**
-		- 1、三者在执行速度上：StringBuilder > StringBuffer > String (由于String是常量，不可改变，拼接时会重新创建新的对象)。
-		- 2、StringBuffer是线程安全的，StringBuilder是线程不安全的。（由于StringBuffer有缓冲区）
+		- 1、三者在执行速度上：StringBuilder > StringBuffer > String (由于String是常量，不可改变，拼接时会重新创建新的对象，StringBuffer有缓冲区)。
+		- 2、StringBuffer是线程安全的，StringBuilder是线程不安全的。
 	- ### 为什么String要设计成不可变的？
 		- 保证安全性，String被许多的Java类(库)用来当做参数,例如 网络连接地址URL,文件路径path,
 	- #### String类可以被继承么？
