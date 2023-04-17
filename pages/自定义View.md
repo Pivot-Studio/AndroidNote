@@ -17,6 +17,20 @@
 		- CPU：执行应用层的measure、layout、draw等操作，绘制完成后将数据提交给GPU
 		- GPU：进一步处理数据，并将数据缓存起来
 		- 屏幕：由一个个像素点组成，以固定的频率（16.6ms，即1秒60帧）从缓冲区中取出数据来填充像素点
+- ## View事件分发传递
+	- 伪代码
+		- ```java
+		   public boolean dispatchTouchEvent(MotionEvent ev) {
+		          boolean consume = false;//事件是否被消费
+		          if (onInterceptTouchEvent(ev)){//调用onInterceptTouchEvent判断是否拦截事件
+		              consume = onTouchEvent(ev);//如果拦截则调用自身的onTouchEvent方法
+		          }else{
+		              consume = child.dispatchTouchEvent(ev);//不拦截调用子View的dispatchTouchEvent方法
+		          }
+		          return consume;//返回值表示事件是否被消费，true事件终止，false调用父View的onTouchEvent方法
+		      }
+		  ```
+	-
 - ## View动画
 	- 动画分为帧动画，view动画，属性动画
 	- ### 帧动画
