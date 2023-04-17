@@ -1,0 +1,13 @@
+- 允许一个程序访问另一个程序中的数据，同时还能保证被访数据的安全性。目前，使用内容提供器是 Android 实现跨程序共享数据的标准方式。
+- ## 使用
+	- 创建类继承自contentprovider,根据需求重写并修改增删改查四个方法，最后在androidmanifest中进行配置
+- ## 面试
+	- ### 安卓的数据储存方法
+		- 文件，sharedpreference，数据库，contentprovider，网络
+	- ### ContentProvider、ContentResolver、ContentObserver 之间的关系
+		- ContentProvider 内容提供者，用于对外提供数据
+		- ContentResolver 内容解析者，用于获取内容提供者提供的数据
+		- ContentObserver 内容监听器，可以监听数据的改变状态
+	- ### 为什么要用 ContentProvider？它和 sql 的实现上有什么差别？
+		- 实现跨进程的大量数据交流，同时保证了访问数据的安全性，对方数据的内部存储实现是不清楚的，我们只用关心数据操作的url即可
+		- sql只是实现了数据的本应用存储。
