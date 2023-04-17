@@ -1,3 +1,7 @@
+- ## 自定义View类型
+	- 继承自组合控件：这周不需要重写onmeasure,onlayout,ondraw方法，是将安卓本身提供的各种类型view根据自己需求封装到一个自定义view类里面，在其内部通过LayoutInflate.inflate进行布局绑定，直接当做正常控件进行使用，主要是为了组合控件的重复利用。
+	- 继承自原始控件：比方说正常的textview,我们希望在其下方加一条横线，就创建一个类继承textview,在ondraw方法里面进行相应绘画。
+	- 继承自view或者v iewgroup，相对复杂许多，可能需要根据特殊情境，比方说下拉刷新和上拉加载。
 - ## View移动
 	- 属性动画
 	- scrollTo
@@ -61,6 +65,12 @@
 		- if(widthMeasureSpec == MeasureSpec.AT_MOST && heightMeasureSpec == MeasureSpec.AT_MOST){
 		- setMeasuredDimension(200,200);
 		- 2.view中有线程或者动画 要及时停止，避免内存泄漏
+	- ### onTouch,onTouchEvent,onClick顺序优先级
+		- onTouch方法返回true，则onTouchEvent方法不会被调用（onClick事件是在onTouchEvent中调用）所以三者优先级是onTouch->onTouchEvent->onClick
+	- ### 自定义View如何配置xml选项
+		- 设置自定义属性：
+		- 创建styleable文件中创建自定义属性对应的变量类型，比方说text对应string
+		- 再在自定义view的构造器利用TypedArray的方法将布局中的自定义属性对应的styleable文件解析出来并加以利用
 	- ### Activity,Windows,View之间的关系？
 		- Activity 主要管理生命周期 windows 首要负责窗口绘制 view主要是绘制内容
 		- setContentView()实际上调用的是getWindow().setContentView()
