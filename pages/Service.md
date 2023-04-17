@@ -1,0 +1,39 @@
+- ## 开启方式
+	- ### 启动状态
+		- 启动方式为startservice(intent)
+		- 不持有服务的实例所以没有办法调用自定义服务内部的方法
+		- 一旦启动，服务即可在后台无限期运行，即使启动服务的组件已被销毁也不受影响，除非手动调用 stopSelfResult（服务内部） 或 stopService(intent)（外部） 来停止服务
+		- 已启动的服务通常是执行单一操作，而且不会将结果返回给调用方。
+		- 重复运行startservice会重复进行onstartcommand
+	- ### 绑定状态
+		- 启动方式为bindservice(intent,ServiceConnection)
+		- 绑定服务提供了一个客户端-服务器接口，允许组件与服务进行交互、发送请求、获取结果,可手动调用unbindService(ServiceConnection)来结束绑定。这时候stopService()（外部）无效
+		- ServiceConnecetion用来在onbind方法运行时获取Service实例或者进行其他
+		- 多个组件可以同时绑定到该服务，但全部取消绑定后，该服务即会被销毁。
+		- 重复运行bindservice,onbind只会运行一次。
+- ## 使用
+	- 先startservice,再bindservice,startservice会运行onstartcommand,bindservice会运行onbind
+- ## 内部方法
+	- ### onBind()方法
+		- 以提供客户端用来与服务进行交互的编程接口。无论是启动状态还是绑定状态都需要重写InBinder方法，不过启动状态中返回null即可
+		- 当利用扩展binder实现绑定服务，服务类中需要自定义内部类继承自Binder，其内部创建的方法就是进行交互的内容，然后内部类的引用由onBind返回
+		- 在组件中创建的ServiceConnection类其内部onServiceConnected会传递来 向上转型的Binder，然后自己向下转型后恢复就可以调用继承自Binder的内部类的方法了。比如说最常用的：在服务类中方法返回Service类名.this,在组件中就可以接受到Service实例了。
+	- ### onStartCommand（Intent intent, int flags, int startId）方法
+		- 三个形参分别是intent, 携带传递来的信息，flages决定启动服务时是否带特殊消息，第三个参数相当于是service的标识符，用来在内部调用stopselfresult方法结束自身
+- ## 前台服务
+	- 前台服务被认为是用户主动意识到的一种服务，因此在内存不足时，系统也不会考虑将其终止。 前台服务必须为状态栏提供通知，状态栏位于“正在进行”标题下方，这意味着除非服务停止或从前台删除，否则不能清除通知
+	- ### 在服务类中或者获取到Service实例
+		- startForeground(int id, Notification notification) 
+		  该方法的作用是把当前服务设置为前台服务，其中id参数代表标识通知的整型数，，而notification是一个状态栏的通知。
+		- stopForeground(boolean removeNotification) 
+		  该方法是用来从前台删除服务，此方法传入一个布尔值，指示是否也删除状态栏通知，true为删除。 注意该方法并不会停止服务。 但是，如果在服务正在前台运行时将其停止，则通知也会被删除。
+	- ### 启动服务下开启前台服务
+		- 在intent中写带标识是否开启前台服务的信息，在onStartCommend中调用startforground
+	- ### 绑定服务下开启前台服务
+		- 获取到Service实例，后再调用
+- ## 面试
+	- ### 开启服务和开启线程的区别？
+		- Service是在主线程中工作的，如果想要进行耗时工作需要再在内部开启子线程
+		- 进程优先级，Thread在后台运行的优先级低于后台运行的Service，如果执行系统资源紧张，会优先杀死前一种，后台运行的Service一般情况下不会被杀死，如果被杀死，系统空闲时会重新启动service.
+	- ### 启动服务与绑定服务间的转换问题
+		- 启动服务的优先级确实比绑定服务高一些。不过无论Service是处于启动状态还是绑定状态，或处于启动并且绑定状态，我们都可以像使用Activity那样通过调用 Intent 来使用服务(即使此服务来自另一应用)。
